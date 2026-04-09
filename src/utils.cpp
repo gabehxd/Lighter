@@ -21,4 +21,27 @@ namespace utils
 
         co_return list;
     }
+
+    dpp::task<dpp::role *> getHighestRole(dpp::guild_member &member)
+    {
+        dpp::role *highest = nullptr;
+        for (auto r : member.get_roles())
+        {
+            auto role = dpp::find_role(r);
+            if (highest == nullptr)
+            {
+                highest = role;
+            }
+            else
+            {
+                if (role == nullptr)
+                    continue;
+                    
+                if (highest < role)
+                    highest = role;
+            }
+        }
+
+        co_return highest;
+    }
 }
