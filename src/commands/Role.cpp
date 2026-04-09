@@ -26,12 +26,20 @@ void Role::addOptions(dpp::slashcommand &cmd)
     cmd.set_interaction_contexts({dpp::interaction_context_type::itc_guild});
 }
 
-dpp::task<void> Role::run(dpp::cluster &bot, const dpp::slashcommand_t &event)
+dpp::task<void> Role::run(dpp::cluster &, const dpp::slashcommand_t &event)
 {
     dpp::command_interaction cmd_data = event.command.get_command_interaction();
     auto subcommand = cmd_data.options[0];
     if (subcommand.name == "all")
     {
+        
+        for (auto r : event.command.member.get_roles())
+        {
+            auto role = dpp::find_role(r);
+            cout << role->name << ": " << role << endl;
+        }
+        event.co_reply("Done!");
+        /* 
         co_await event.co_thinking();
         dpp::snowflake target_id = get<dpp::snowflake>(event.get_parameter("role"));
 
@@ -45,6 +53,7 @@ dpp::task<void> Role::run(dpp::cluster &bot, const dpp::slashcommand_t &event)
             co_await bot.set_audit_reason(auditStr).co_guild_member_add_role(event.command.guild_id, member.first, target_id);
         }
         co_await event.co_follow_up(dpp::message("Role given out!"));
+        */
         co_return;
         }
     co_return;
