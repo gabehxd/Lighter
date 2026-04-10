@@ -13,4 +13,8 @@ public:
     dpp::slashcommand BuildCommand(const dpp::snowflake &);
     virtual void addOptions(dpp::slashcommand &) {}
     virtual void createAutoComplete(dpp::cluster &, const dpp::autocomplete_t &, const dpp::command_option &) {}
+    virtual std::vector<dpp::interaction_context_type> getInteractionsContext()
+    {
+        return {dpp::itc_bot_dm, dpp::itc_guild, dpp::itc_private_channel};
+    }
 };

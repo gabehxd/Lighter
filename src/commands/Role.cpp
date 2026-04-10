@@ -22,8 +22,11 @@ void Role::addOptions(dpp::slashcommand &cmd)
     cmd.add_option(
         dpp::command_option(dpp::co_sub_command, "all", "[ADMIN] Give roles to all nonbot users")
             .add_option(dpp::command_option(dpp::co_role, "role", "Role to give", true)));
+}
 
-    cmd.set_interaction_contexts({dpp::interaction_context_type::itc_guild});
+std::vector<dpp::interaction_context_type> Role::getInteractionsContext()
+{
+    return {dpp::interaction_context_type::itc_guild};
 }
 
 dpp::task<void> Role::run(dpp::cluster &, const dpp::slashcommand_t &event)
@@ -32,14 +35,14 @@ dpp::task<void> Role::run(dpp::cluster &, const dpp::slashcommand_t &event)
     auto subcommand = cmd_data.options[0];
     if (subcommand.name == "all")
     {
-        
+
         for (auto r : event.command.member.get_roles())
         {
             auto role = dpp::find_role(r);
             cout << role->name << ": " << role << endl;
         }
         event.co_reply("Done!");
-        /* 
+        /*
         co_await event.co_thinking();
         dpp::snowflake target_id = get<dpp::snowflake>(event.get_parameter("role"));
 
@@ -55,6 +58,6 @@ dpp::task<void> Role::run(dpp::cluster &, const dpp::slashcommand_t &event)
         co_await event.co_follow_up(dpp::message("Role given out!"));
         */
         co_return;
-        }
+    }
     co_return;
 }

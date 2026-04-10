@@ -2,6 +2,7 @@
 #include "../commands/Info.h"
 #include "../commands/Ping.h"
 #include "../commands/Role.h"
+#include "../commands/ChromeCount.h"
 #include "../lighterwise.h"
 
 using namespace std;
@@ -11,6 +12,7 @@ CommandEvent::CommandEvent()
   insert<Ping>();
   insert<Role>();
   insert<Info>();
+  insert<ChromeCount>();
 }
 
 void CommandEvent::registerEvent(dpp::cluster &bot)
@@ -20,7 +22,14 @@ void CommandEvent::registerEvent(dpp::cluster &bot)
       {
         if (dpp::run_once<struct register_bot_commands>())
         {
+          
+          #ifdef NDEBUG
+          co_await bot.co_guild_bulk_command_delete(lighterwise::guild);
           co_await bot.co_global_bulk_command_create(getBuiltCommandsList(bot.me.id));
+          #else
+          co_await bot.co_guild_bulk_command_create(getBuiltCommandsList(bot.me.id), lighterwise::guild);
+          #endif
+
         }
         co_return;
       });

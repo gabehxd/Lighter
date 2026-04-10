@@ -44,8 +44,3 @@ dpp::task<void> Info::run(dpp::cluster &bot, const dpp::slashcommand_t &event)
     co_await event.co_reply(msg);
     co_return;
 }
-
-void Info::addOptions(dpp::slashcommand &cmd)
-{
-    cmd.set_interaction_contexts({dpp::itc_bot_dm, dpp::itc_guild, dpp::itc_private_channel});
-}

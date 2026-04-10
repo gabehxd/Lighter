@@ -25,6 +25,7 @@ add_executable(${PROJECT_NAME}
     src/utils.cpp
     src/events/HelloEvent.cpp
     src/commands/Info.cpp
+    src/commands/ChromeCount.cpp
 )
 	 
 # Find our pre-installed DPP package (using FindDPP.cmake).

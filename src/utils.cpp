@@ -36,7 +36,7 @@ namespace utils
             {
                 if (role == nullptr)
                     continue;
-                    
+
                 if (*highest < *role)
                     highest = role;
             }

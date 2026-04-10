@@ -18,8 +18,3 @@ dpp::task<void> Ping::run(dpp::cluster &, const dpp::slashcommand_t &event)
     co_await event.co_reply("Pong");
     co_return;
 }
-
-void Ping::addOptions(dpp::slashcommand &cmd)
-{
-    cmd.set_interaction_contexts({dpp::itc_bot_dm, dpp::itc_guild, dpp::itc_private_channel});
-}
