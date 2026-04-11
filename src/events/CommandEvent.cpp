@@ -18,22 +18,22 @@ CommandEvent::CommandEvent()
 void CommandEvent::registerEvent(dpp::cluster &bot)
 {
   bot.on_ready(
-      [&bot, this](const dpp::ready_t &) -> dpp::task<void>
+      [&bot, &self = *this](const dpp::ready_t &) -> dpp::task<void>
       {
         if (dpp::run_once<struct register_bot_commands>())
         {
-          co_await bot.co_global_bulk_command_create(getBuiltCommandsList(bot.me.id));
+          co_await bot.co_global_bulk_command_create(self.getBuiltCommandsList(bot.me.id));
         }
         co_return;
       });
 
   bot.on_slashcommand(
-      [&bot, this](const dpp::slashcommand_t &event) -> dpp::task<void>
+      [&bot, &self = *this](const dpp::slashcommand_t &event) -> dpp::task<void>
       {
         try
         {
           bot.log(dpp::loglevel::ll_info, "Running command: " + event.command.get_command_name() + " for" + event.command.get_issuing_user().username);
-          co_await commandMap.at(event.command.get_command_name()).get()->run(bot, event);
+          co_await self.commandMap.at(event.command.get_command_name()).get()->run(bot, event);
         }
         catch (out_of_range &ex)
         {
