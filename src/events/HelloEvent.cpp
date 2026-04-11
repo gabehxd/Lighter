@@ -4,7 +4,7 @@ using namespace std;
 
 void HelloEvent::registerEvent(dpp::cluster &bot)
 {
-  bot.on_message_create([&bot](const dpp::message_create_t &event) -> dpp::task<void>
+  bot.on_message_create([&bot, this](this auto, const dpp::message_create_t &event) -> dpp::task<void>
                         {
       static string mention = "<@" + bot.me.id.str() + ">";
       if (event.msg.content.contains(mention))

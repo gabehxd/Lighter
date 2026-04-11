@@ -5,7 +5,7 @@ using namespace std;
 
 void VerifyEvent::registerEvent(dpp::cluster &bot)
 {
-    bot.on_message_create([&bot](const dpp::message_create_t &event) -> dpp::task<void>
+    bot.on_message_create([&bot, this](this auto, const dpp::message_create_t &event) -> dpp::task<void>
                           {
         if (event.msg.author == bot.me)
             co_return;

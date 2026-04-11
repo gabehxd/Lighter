@@ -7,8 +7,10 @@ int main()
   ifstream tokenFile("token");
   if (!tokenFile.is_open())
   {
+    cout << "Token not found!";
     return EXIT_FAILURE;
   }
+  
   string token;
   tokenFile >> token;
   tokenFile.close();
@@ -22,6 +24,7 @@ int main()
   events.push_back(make_unique<CommandEvent>());
   events.push_back(make_unique<VerifyEvent>());
   events.push_back(make_unique<HelloEvent>());
+  //events.push_back(make_unique<MediaEvent>());
 
   for (const auto &event : events)
   {
