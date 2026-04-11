@@ -32,6 +32,7 @@ void CommandEvent::registerEvent(dpp::cluster &bot)
       {
         try
         {
+          bot.log(dpp::loglevel::ll_info, "Running command: " + event.command.get_command_name() + " for" + event.command.get_issuing_user().username);
           co_await commandMap.at(event.command.get_command_name()).get()->run(bot, event);
         }
         catch (out_of_range &ex)
