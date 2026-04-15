@@ -10,7 +10,7 @@ std::string ChromeCount::getCommand() const
 
 std::string ChromeCount::getDescription() const
 {
-    return "Count the total amount of pulls you have for ZenlessZoneZero!";
+    return "Count the total amount of pulls you have for Zenless Zone Zero!";
 }
 
 dpp::task<void> ChromeCount::run(dpp::cluster &, const dpp::slashcommand_t &event)
