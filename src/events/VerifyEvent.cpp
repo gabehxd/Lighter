@@ -7,7 +7,7 @@ void VerifyEvent::registerEvent(dpp::cluster &bot)
 {
     bot.on_message_create([&bot, this](this auto, const dpp::message_create_t &event) -> dpp::task<void>
                           {
-        if (event.msg.author == bot.me && event.msg.webhook_id != 0)
+        if (event.msg.author == bot.me || event.msg.webhook_id != 0)
             co_return;
 
         if (event.msg.channel_id == lighterwise::verifyChannel)
